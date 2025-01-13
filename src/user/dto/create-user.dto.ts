@@ -11,5 +11,5 @@ export class CreateUserDto {
   password: string;
 
   @IsNotEmpty()
-  role: 'supplier' | 'charity' | 'admin';
+  role: 'user' | 'supplier' | 'charity' | 'admin';
 }

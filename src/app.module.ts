@@ -13,24 +13,21 @@ import { FoodRequest } from './food/entity/foodRequest.entity';
 import { Delivery } from './delivery/entity/delivery.entity';
 import { UserModule } from './user/user.module';
 
+const configService = new ConfigService();
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, // Makes the config module globally available
+      isGlobal: true,
     }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get<string>('DB_HOST'),
-        port: +configService.get<number>('DB_PORT'),
-        username: configService.get<string>('DB_USERNAME'),
-        password: configService.get<string>('DB_PASSWORD'),
-        database: configService.get<string>('DB_NAME'),
-        entities: [User, Supplier, Charity, FoodItem, FoodRequest, Delivery],
-        synchronize: true, // Disable this in production
-      }),
-      inject: [ConfigService],
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: configService.get<string>('DB_HOST'),
+      port: configService.get<number>('DB_PORT'),
+      username: configService.get<string>('DB_USER'),
+      password: configService.get<string>('DB_PASS'),
+      database: configService.get<string>('DB_NAME'),
+      entities: [User, Supplier, Charity, FoodItem, FoodRequest, Delivery],
+      synchronize: true, // Disable this in production
     }),
     UserModule,
   ],
