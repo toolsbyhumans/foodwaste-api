@@ -29,13 +29,23 @@ export class UserService {
    * @param id - User ID
    * @returns User or throws an exception if not found
    */
-  async findById(id: number): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { id } });
-    if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+  async findById(id: number): Promise<User | null> {
+    if (!id || isNaN(id)) {
+      console.error('Invalid ID passed to findById:', id);
+      throw new Error('Invalid ID');
     }
 
-    return plainToClass(User, user);
+    try {
+      const user = await this.userRepository.findOne({ where: { id } });
+      if (!user) {
+        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      }
+
+      return plainToClass(User, user);
+    } catch (error) {
+      console.error('Database query error:', error.message);
+      throw error;
+    }
   }
 
   /**

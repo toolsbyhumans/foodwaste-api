@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import * as argon2 from 'argon2';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { UserDto } from './dto/user.dto';
 
 @Injectable()
 export class AuthService {
@@ -20,8 +21,13 @@ export class AuthService {
     return await argon2.verify(hash, password);
   }
 
-  async generateJwt(user: any) {
-    const payload = { id: user.id, email: user.email, role: user.role };
+  async generateJwt(user: UserDto) {
+    const payload = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    };
 
     // Get the JWT secret from ConfigService
     const secret = this.configService.get<string>('JWT_SECRET', 'secretKey');
