@@ -14,9 +14,11 @@ describe('AppController', () => {
     appController = app.get<AppController>(AppController);
   });
 
-  describe('root', () => {
+  describe('Health Check', () => {
     it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+      expect(appController.healthCheck()).toBe(
+        '@toolsbyhumans/foodwaste-api ✅',
+      );
     });
   });
 });
