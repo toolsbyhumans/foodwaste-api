@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import * as argon2 from 'argon2';
 import { JwtService } from '@nestjs/jwt';
-import { User } from './entity/user.entity';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
+  ) {}
 
   async hashPassword(password: string): Promise<string> {
     return await argon2.hash(password, {
@@ -17,8 +20,12 @@ export class AuthService {
     return await argon2.verify(hash, password);
   }
 
-  async generateJwt(user: User): Promise<string> {
+  async generateJwt(user: any) {
     const payload = { id: user.id, email: user.email, role: user.role };
-    return this.jwtService.sign(payload);
+
+    // Get the JWT secret from ConfigService
+    const secret = this.configService.get<string>('JWT_SECRET', 'secretKey');
+
+    return this.jwtService.sign(payload, { secret });
   }
 }

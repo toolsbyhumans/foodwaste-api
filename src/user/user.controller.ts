@@ -24,6 +24,16 @@ export class UserController {
     private readonly authService: AuthService,
   ) {}
 
+  @UseGuards(JwtAuthGuard)
+  @Get('whoami')
+  async whoAmI(@Request() req: any) {
+    const user = req.user; // Extract user information from the request
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+    return user; // Return the authenticated user's details
+  }
+
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto) {
     // Check if the user already exists
