@@ -1,15 +1,18 @@
 import { IsNotEmpty, IsEmail, MinLength } from 'class-validator';
 
 export class CreateUserDto {
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'O nome é obrigatório.' })
   name: string;
 
-  @IsEmail()
+  @IsEmail({}, { message: 'O e-mail deve ser válido.' })
   email: string;
 
-  @MinLength(6)
+  @MinLength(6, { message: 'A senha deve ter pelo menos 6 caracteres.' })
   password: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({
+    message:
+      'O papel do usuário é obrigatório. Escolha entre: user, supplier, charity ou admin.',
+  })
   role: 'user' | 'supplier' | 'charity' | 'admin';
 }
