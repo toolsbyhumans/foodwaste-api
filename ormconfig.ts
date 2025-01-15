@@ -1,6 +1,6 @@
-import { Charity } from 'src/user/entity/charity.entity';
-import { Supplier } from 'src/user/entity/supplier.entity';
-import { User } from 'src/user/entity/user.entity';
+import { Charity } from 'src/core/user/entity/charity.entity';
+import { Supplier } from 'src/core/user/entity/supplier.entity';
+import { User } from 'src/core/user/entity/user.entity';
 import { DataSource } from 'typeorm';
 
 const AppDataSource = new DataSource({

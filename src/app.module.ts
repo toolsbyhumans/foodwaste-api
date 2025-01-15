@@ -5,10 +5,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 // Import entities
-import { User } from './user/entity/user.entity';
-import { Supplier } from './user/entity/supplier.entity';
-import { Charity } from './user/entity/charity.entity';
-import { UserModule } from './user/user.module';
+import { User } from './core/user/entity/user.entity';
+import { Supplier } from './core/user/entity/supplier.entity';
+import { Charity } from './core/user/entity/charity.entity';
+import { UserModule } from './core/user/user.module';
 
 const configService = new ConfigService();
 @Module({
