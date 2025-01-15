@@ -1,6 +1,3 @@
-import { Delivery } from 'src/delivery/entity/delivery.entity';
-import { FoodItem } from 'src/food/entity/foodItem.entity';
-import { FoodRequest } from 'src/food/entity/foodRequest.entity';
 import { Charity } from 'src/user/entity/charity.entity';
 import { Supplier } from 'src/user/entity/supplier.entity';
 import { User } from 'src/user/entity/user.entity';
@@ -13,7 +10,7 @@ const AppDataSource = new DataSource({
   username: process.env.DB_USER || 'postgres',
   password: process.env.DB_PASS || 'password',
   database: process.env.DB_NAME || 'toolsbyhumans',
-  entities: [User, Supplier, Charity, FoodItem, FoodRequest, Delivery],
+  entities: [User, Supplier, Charity],
   synchronize: process.env.NODE_ENV !== 'production', // Enable only in dev
   migrations: ['src/migrations/*.ts'],
   logging:
